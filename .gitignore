@@ -1,0 +1,7 @@
+node_modules
+do_not_commit
+client/fonts/
+cypress/videos
+cypress/screenshots
+cypress/mounted/models
+*.bak
