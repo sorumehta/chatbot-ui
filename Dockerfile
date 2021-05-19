@@ -1,4 +1,4 @@
-FROM node:carbon-stretch
+FROM ubuntu
 
 ENV METEOR_ALLOW_SUPERUSER=true
 ENV ROOT_URL http://localhost:3000
@@ -9,6 +9,12 @@ ENV SCRIPTS_FOLDER /docker
 ENV MONGO_URL localhost
 ENV MONGO_PORT 27017
 ENV MONGO_DB myappdb
+
+# Install dependencies, based on https://github.com/jshimko/meteor-launchpad/blob/master/scripts/install-deps.sh (only the parts we plan to use)
+ENV DEBIAN_FRONTEND=noninteractive
+RUN apt-get update && \
+	apt-get install --assume-yes apt-transport-https ca-certificates && \
+	apt-get install --assume-yes --no-install-recommends build-essential bzip2 curl git libarchive-tools python
 
 # Install Meteor
 RUN curl https://install.meteor.com/?release=$METEOR_VERSION --output /tmp/install-meteor.sh && \
@@ -24,6 +30,8 @@ ENV METEOR_ALLOW_SUPERUSER true
 
 # Copy entrypoint and dependencies
 COPY ./docker $SCRIPTS_FOLDER/
+
+RUN ls $SCRIPTS_FOLDER/
 
 # Install Docker entrypoint dependencies; npm ci was added in npm 5.7.0, and therefore available only to Meteor 1.7+
 RUN cd $SCRIPTS_FOLDER && \

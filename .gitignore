@@ -5,3 +5,4 @@ cypress/videos
 cypress/screenshots
 cypress/mounted/models
 *.bak
+build
