@@ -12,4 +12,6 @@ mkdir --parents $APP_BUNDLE_FOLDER
 
 cd $APP_SOURCE_FOLDER
 
+ls -l
+
 meteor build --directory $APP_BUNDLE_FOLDER --server-only

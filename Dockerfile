@@ -6,9 +6,10 @@ ENV APP_NAME botfrontui
 ENV APP_SOURCE_FOLDER /opt/src
 ENV APP_BUNDLE_FOLDER /opt/bundle
 ENV SCRIPTS_FOLDER /docker
-ENV MONGO_URL localhost
+ENV MONGO_SERVER localhost
 ENV MONGO_PORT 27017
 ENV MONGO_DB myappdb
+ENV MONGO_URL=mongodb://$MONGO_SERVER:$MONGO_PORT/$MONGO_DB
 
 # Install dependencies, based on https://github.com/jshimko/meteor-launchpad/blob/master/scripts/install-deps.sh (only the parts we plan to use)
 ENV DEBIAN_FRONTEND=noninteractive
@@ -58,5 +59,7 @@ COPY . $APP_SOURCE_FOLDER/
 RUN bash $SCRIPTS_FOLDER/build-meteor-bundle.sh
 
 RUN bash $SCRIPTS_FOLDER/build-meteor-npm-dependencies.sh
+
+WORKDIR $APP_BUNDLE_FOLDER/bundle
 
 CMD ["node", "main.js"]
