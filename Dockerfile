@@ -34,6 +34,9 @@ COPY ./docker $SCRIPTS_FOLDER/
 
 RUN ls $SCRIPTS_FOLDER/
 
+
+RUN chmod -R +x $SCRIPTS_FOLDER/
+
 # Install Docker entrypoint dependencies; npm ci was added in npm 5.7.0, and therefore available only to Meteor 1.7+
 RUN cd $SCRIPTS_FOLDER && \
 	if bash -c "if [[ ${METEOR_VERSION} == 1.6* ]]; then exit 0; else exit 1; fi"; then \
