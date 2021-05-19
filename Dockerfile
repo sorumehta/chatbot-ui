@@ -2,9 +2,7 @@ FROM geoffreybooth/meteor-base:2.0
 
 ENV ROOT_URL http://localhost:3000
 ENV APP_NAME botfrontui
-RUN echo $APP_SOURCE_FOLDER
-RUN echo $APP_BUNDLE_FOLDER
-RUN echo $SCRIPTS_FOLDER
+ENV METEOR_OFFLINE_CATALOG=1
 #ENV APP_SOURCE_FOLDER /opt/src
 #ENV APP_BUNDLE_FOLDER /opt/bundle
 #ENV SCRIPTS_FOLDER /docker
