@@ -53,4 +53,5 @@ RUN chgrp -R 0 $SCRIPTS_FOLDER && chmod -R g=u $SCRIPTS_FOLDER
 VOLUME [ "/app/models"]
 # ENTRYPOINT ["/docker/entrypoint.sh"]
 WORKDIR $APP_BUNDLE_FOLDER/bundle
-CMD ["node", "main.js"]
+EXPOSE 3000
+CMD ["node", "main.js", "--trace-warnings"]
