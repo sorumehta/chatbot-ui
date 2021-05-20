@@ -1,36 +1,56 @@
+# The tag here should match the Meteor version of your app, per .meteor/release
 FROM geoffreybooth/meteor-base:2.0
 
-ENV ROOT_URL http://0.0.0.0:3000
-ENV APP_NAME botfrontui
-ENV METEOR_OFFLINE_CATALOG=1
-#ENV APP_SOURCE_FOLDER /opt/src
-#ENV APP_BUNDLE_FOLDER /opt/bundle
-#ENV SCRIPTS_FOLDER /docker
-ENV MONGO_SERVER mongo.voicebot.svc
-ENV MONGO_PORT 27017
-ENV MONGO_DB myappdb
-ENV MONGO_URL=mongodb://$MONGO_SERVER:$MONGO_PORT/$MONGO_DB
-
+# Copy app package.json and package-lock.json into container
 COPY ./package*.json $APP_SOURCE_FOLDER/
 COPY ./postinstall.sh $APP_SOURCE_FOLDER/
-
-ENV NODE_ENV production
+ARG ARG_NODE_ENV=production
+ENV NODE_ENV $ARG_NODE_ENV
 ENV DISABLE_CLIENT_STATS 1
 # Increase Node memory for build
 ENV TOOL_NODE_FLAGS --max-old-space-size=4096
 
 RUN bash $SCRIPTS_FOLDER/build-app-npm-dependencies.sh
 
+# Copy app source into container
 COPY . $APP_SOURCE_FOLDER/
-
-RUN chown -Rh root $APP_SOURCE_FOLDER/.meteor/local
 
 RUN bash $SCRIPTS_FOLDER/build-meteor-bundle.sh
 
+# Use Debian, because nodegit is too hard to get to work with
+# Alpine >=3.8
+FROM node:12-buster-slim
+RUN apt-get update && apt-get install -y python g++ build-essential
+
+ENV APP_BUNDLE_FOLDER /opt/bundle
+ENV SCRIPTS_FOLDER /docker
+
+ENV MONGO_SERVER mongo.voicebot.svc
+ENV MONGO_PORT 27017
+ENV MONGO_DB myappdb
+ENV MONGO_URL=mongodb://$MONGO_SERVER:$MONGO_PORT/$MONGO_DB
+ENV ROOT_URL http://0.0.0.0:3000
+ENV APP_NAME botfrontui
+
+# Copy in entrypoint
+COPY --from=0 $SCRIPTS_FOLDER $SCRIPTS_FOLDER/
+COPY ./entrypoint.sh $SCRIPTS_FOLDER
+RUN chmod +x $SCRIPTS_FOLDER/entrypoint.sh
+
+# Copy in app bundle
+COPY --from=0 $APP_BUNDLE_FOLDER/bundle $APP_BUNDLE_FOLDER/bundle/
+
 RUN bash $SCRIPTS_FOLDER/build-meteor-npm-dependencies.sh
 
+# Nodegit dependencies
+RUN apt-get update && apt-get install -y libgssapi-krb5-2
+RUN npm install --prefix $APP_BUNDLE_FOLDER/bundle/programs/server nodegit
+
+# Those dependencies are needed by the entrypoint.sh script
+RUN npm install -C $SCRIPTS_FOLDER p-wait-for mongodb
 RUN chgrp -R 0 $SCRIPTS_FOLDER && chmod -R g=u $SCRIPTS_FOLDER
 
-ENTRYPOINT ["/docker/entrypoint.sh"]
-
+VOLUME [ "/app/models"]
+# ENTRYPOINT ["/docker/entrypoint.sh"]
+WORKDIR $APP_BUNDLE_FOLDER/bundle
 CMD ["node", "main.js"]
