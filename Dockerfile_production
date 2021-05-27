@@ -4,7 +4,7 @@ FROM geoffreybooth/meteor-base:2.0
 # Copy app package.json and package-lock.json into container
 COPY ./package*.json $APP_SOURCE_FOLDER/
 COPY ./postinstall.sh $APP_SOURCE_FOLDER/
-ARG ARG_NODE_ENV=production
+ARG ARG_NODE_ENV=development
 ENV NODE_ENV $ARG_NODE_ENV
 ENV DISABLE_CLIENT_STATS 1
 # Increase Node memory for build
