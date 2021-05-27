@@ -13,12 +13,12 @@ class SetupSteps extends React.Component {
         this.state = {
             loading: false,
         };
-        Meteor.call('users.checkEmpty', (err, empty) => {
-            if (!empty) {
-                const { router } = this.props;
-                router.push('/login');
-            }
-        });
+        // Meteor.call('users.checkEmpty', (err, empty) => {
+        //     if (!empty) {
+        //         const { router } = this.props;
+        //         router.push('/login');
+        //     }
+        // });
     }
 
     handleAccountSubmit = (doc) => {
@@ -28,34 +28,42 @@ class SetupSteps extends React.Component {
         doc.email = doc.email.trim();
         doc.password = doc.password.trim();
         this.setState({ loading: true });
-        Meteor.call(
-            'initialSetup',
-            doc,
-            wrapMeteorCallback((err) => {
-                if (err) {
-                    this.setState({ loading: false });
-                    throw new Error(err);
-                }
-                Meteor.loginWithPassword(
-                    doc.email,
-                    doc.password,
-                    wrapMeteorCallback(() => {
-                        Promise.all([
-                            Meteor.callWithPromise('nlu.chitChatSetup'),
-                        ])
-                            .then(() => {
-                                this.setState({ loading: false });
-                                router.push('/admin/projects');
-                            })
-                            .catch((e) => {
-                                this.setState({ loading: false });
-                                // eslint-disable-next-line no-console
-                                console.log(e);
-                            });
-                    }),
-                );
-            }),
-        );
+        let setupMethodName = 'initialSetup'
+        Meteor.call('users.checkEmpty', (err, empty) => {
+            if (!empty) {
+                console.log("users collection not empty. Will invoke newAccountSetup instead of initialSetup")
+                setupMethodName = 'newAccountSetup'
+            }
+            Meteor.call(
+                setupMethodName,
+                doc,
+                wrapMeteorCallback((err) => {
+                    if (err) {
+                        this.setState({ loading: false });
+                        throw new Error(err);
+                    }
+                    Meteor.loginWithPassword(
+                        doc.email,
+                        doc.password,
+                        wrapMeteorCallback(() => {
+                            Promise.all([
+                                Meteor.callWithPromise('nlu.chitChatSetup'),
+                            ])
+                                .then(() => {
+                                    this.setState({ loading: false });
+                                    router.push('/admin/projects');
+                                })
+                                .catch((e) => {
+                                    this.setState({ loading: false });
+                                    // eslint-disable-next-line no-console
+                                    console.log(e);
+                                });
+                        }),
+                    );
+                }),
+            );
+        });
+        
     };
 
     render() {

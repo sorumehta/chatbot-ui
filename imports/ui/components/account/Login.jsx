@@ -109,6 +109,11 @@ class LoginComponent extends React.Component {
                             <Link style={{ color: '#000' }} to='/forgot-password'>
                                 Forgot your password?
                             </Link>
+                            <br />
+                            <br />
+                            <Link to='/setup/account'>
+                                Create a new account
+                            </Link>
                         </AutoForm>
                     </Segment>
                 )}

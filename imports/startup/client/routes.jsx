@@ -130,7 +130,7 @@ class Routes extends React.PureComponent {
                     <ApolloHooksProvider client={apolloClient}>
                         <Provider store={store}>
                             <Router history={browserHistory}>
-                                <Route exact path='/setup' component={withErrorCatcher(SetupLayout)} onEnter={validateCanSetup()}>
+                                <Route exact path='/setup' component={withErrorCatcher(SetupLayout)}>
                                     <Route path='/setup/welcome' component={Welcome} name='Welcome' />
                                     <Route path='/setup/account' component={SetupSteps} name='Account' />
                                 </Route>

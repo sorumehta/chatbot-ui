@@ -114,6 +114,23 @@ if (Meteor.isServer) {
             Roles.addUsersToRoles(userId, ['global-admin'], null);
         },
 
+        async 'newAccountSetup'(accountData) {
+            console.log("newAccountSetup!")
+            const {
+                email, password, firstName, lastName,
+            } = accountData;
+            const userId = Accounts.createUser({
+                email,
+                password,
+                profile: {
+                    firstName,
+                    lastName,
+                },
+            });
+            console.log(`user created with ID = ${userId}`)
+            Roles.addUsersToRoles(userId, ['global-admin'], null);
+        },
+
         async 'initialSetup.secondStep'(projectData) {
             check(projectData, Object);
             const project = {
