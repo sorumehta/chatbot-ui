@@ -9,7 +9,7 @@ describe('filter', function() {
     });
 
     it('project filters', function() {
-        cy.visit('/admin/projects');
+        cy.visit('/accounts/:account_id/projects');
         cy.get('.rt-tr > :nth-child(1) > input')
             .click()
             .type('dix');
@@ -19,7 +19,7 @@ describe('filter', function() {
 
     it('user filters', function() {
         cy.login();
-        cy.visit('/admin/users');
+        cy.visit('/accounts/:account_id/users');
         cy.get('.rt-tr > :nth-child(1) > input')
             .click()
             .type('mc');

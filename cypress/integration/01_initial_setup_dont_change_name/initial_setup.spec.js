@@ -39,6 +39,6 @@ describe('intial setup', function () {
 
 
         cy.wait(5000);
-        cy.url({ timeout: 30000 }).should('include', '/admin/projects');
+        cy.url({ timeout: 30000 }).should('include', '/accounts/:account_id/projects');
     });
 });

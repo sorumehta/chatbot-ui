@@ -6,7 +6,11 @@ import { withTracker } from 'meteor/react-meteor-data';
 import { can } from '../../../lib/scopes';
 
 class AdminSidebar extends React.Component {
+    
+
     render() {
+        const {params} = this.props;
+        
         const style = {
             position: 'fixed',
             top: '0px',
@@ -24,25 +28,25 @@ class AdminSidebar extends React.Component {
                         Admin
                     </Menu.Header>
                     {can('projects:r', { anyScope: true }) && (
-                        <Link to='/admin/projects'>
+                        <Link to={`/accounts/${params.account_id}/projects`} >
                             <Menu.Item name='Projects' data-cy='projects-link'> Projects</Menu.Item>
                         </Link>
                     )}
                     {can('users:r', { anyScope: true }) && (
-                        <Link to='/admin/users' data-cy='users-link'>
+                        <Link to={`/accounts/${params.account_id}/users`} data-cy='users-link'>
                             <Menu.Item name='Users'> Users</Menu.Item>
                         </Link>
                     )}
                     {can('global-settings:r', { anyScope: true })
                     && (
-                        <Link to='/admin/settings'>
+                        <Link to={`/accounts/${params.account_id}/settings`}>
                             <Menu.Item name='Settings' data-cy='global-settings-link'> Settings</Menu.Item>
                         </Link>
                     )
                     }
                     {can('roles:r', { anyScope: true })
                         && (
-                            <Link to='/admin/roles'>
+                            <Link to={`/accounts/${params.account_id}/roles`}>
                                 <Menu.Item name='Roles' data-cy='roles-link'> Roles</Menu.Item>
                             </Link>
                         )

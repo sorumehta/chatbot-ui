@@ -10,7 +10,7 @@ describe('Project Creation', function() {
     });
 
     it('When creating a new project, a default model should be added to the project', function() {
-        cy.visit('/admin/projects');
+        cy.visit('/accounts/:account_id/projects');
         // Creating a project
         cy.wait(1000);
         cy.get('[data-cy=\'new-project\']').click();
@@ -25,12 +25,12 @@ describe('Project Creation', function() {
         cy.get('[data-cy=language-selector] input').type('English{enter}');
         cy.contains('English');
         // Deleting the Test project, First Disable the project, then delete it
-        cy.visit('/admin/projects');
+        cy.visit('/accounts/:account_id/projects');
         cy.get('input').eq(0).click().type('Test');
         cy.get('.center .grey').click();
         cy.get('.ui > label').click();
         cy.dataCy('submit-field').click();
-        cy.visit('/admin/projects');
+        cy.visit('/accounts/:account_id/projects');
         cy.get('input').eq(0).click().type('Test');
         cy.get('.center .grey').click();
         cy.dataCy('delete-project').click();

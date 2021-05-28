@@ -13,7 +13,7 @@ describe('project creation', function () {
     });
 
     it('should be possible to create and delete project', function () {
-        cy.visit('/admin/projects');
+        cy.visit('/accounts/:account_id/projects');
         cy.wait(1000);
         cy.dataCy('new-project').click();
         cy.get('#uniforms-0000-0001').type('test');

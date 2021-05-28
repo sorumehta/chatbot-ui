@@ -5,6 +5,8 @@ import Alert from 'react-s-alert';
 import AdminSidebar from '../components/admin/Sidebar';
 
 export default class AdminLayout extends React.Component {
+    
+
     componentDidMount() {
         const { location } = this.props;
         if (location.state && location.state.error) {
@@ -23,7 +25,8 @@ export default class AdminLayout extends React.Component {
     };
 
     render() {
-        const { children } = this.props;
+        
+        const { children, params } = this.props;
         const style = {
             height: '100vh',
         };
@@ -39,7 +42,7 @@ export default class AdminLayout extends React.Component {
         return (
             <div style={style}>
                 <div style={menuStyle}>
-                    <AdminSidebar handleLogout={this.handleLogout} />
+                    <AdminSidebar handleLogout={this.handleLogout} params={params} />
                 </div>
                 <div style={contentStyle}>{children}</div>
                 <Alert stack={{ limit: 3 }} />

@@ -20,20 +20,20 @@ describe('roles permissions', () => {
     });
 
     it('should not be able to create new response', () => {
-        cy.visit('/admin/roles');
+        cy.visit('/accounts/:account_id/roles');
         cy.dataCy('create-role').should('not.exist');
     });
 
     it('should see list of all roles', () => {
-        cy.visit('/admin/roles');
+        cy.visit('/accounts/:account_id/roles');
         cy.get('div.rt-td a').should('have.length', 20);
         cy.get('div.-next button.-btn').click();
         cy.get('div.rt-td a').should('have.length', 11); // 10 base roles + 1 dummy role
-        cy.visit('/admin/roles');
+        cy.visit('/accounts/:account_id/roles');
     });
 
     it('should see details of a role', () => {
-        cy.visit('/admin/roles');
+        cy.visit('/accounts/:account_id/roles');
         cy.get('div.-next button.-btn').click();
         cy.contains('dummy').click();
         cy.get('div.required.field').each(elm => cy.wrap(elm).should('have.class', 'disabled'));

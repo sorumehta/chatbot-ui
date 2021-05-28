@@ -24,7 +24,7 @@ describe('edit users', function () {
 
 
     it('should be able to delete a user', function () {
-        cy.visit('/admin/users');
+        cy.visit('/accounts/:account_id/users');
         cy.get('.rt-td').contains('McTest').should('exist');
         cy.wait(1000);
         cy.dataCy('new-user').should('exist');

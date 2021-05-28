@@ -18,7 +18,7 @@ describe('should not get 404s for default routes', () => {
         cy.visit('/');
         cy.get('.vertical.menu').should('exist');
         cy.get('.header').contains('Roles').should('exist');
-        cy.url().should('include', '/admin/roles');
+        cy.url().should('include', '/accounts/:account_id/roles');
     });
     it('users:r/w default route', () => {
         cy.createDummyRoleAndUser({ permission: ['users:r'] });
@@ -26,7 +26,7 @@ describe('should not get 404s for default routes', () => {
         cy.visit('/');
         cy.get('.vertical.menu').should('exist');
         cy.get('.header').contains('Users').should('exist');
-        cy.url().should('include', '/admin/users');
+        cy.url().should('include', '/accounts/:account_id/users');
     });
     it('projects:r/w global default', () => {
         cy.createDummyRoleAndUser({ permission: ['projects:r'], scope: 'GLOBAL' });
@@ -34,7 +34,7 @@ describe('should not get 404s for default routes', () => {
         cy.visit('/');
         cy.get('.ui.top-menu').should('exist');
         cy.get('.header').contains('Projects').should('exist');
-        cy.url().should('include', '/admin/projects');
+        cy.url().should('include', '/accounts/:account_id/projects');
     });
     it('projects:r/w scoped default', () => {
         cy.createDummyRoleAndUser({ permission: ['projects:r'], scope: 'bf' });
@@ -50,7 +50,7 @@ describe('should not get 404s for default routes', () => {
         cy.visit('/');
         cy.get('.ui.top-menu').should('exist');
         cy.get('.header').contains('Global Settings').should('exist');
-        cy.url().should('include', '/admin/settings');
+        cy.url().should('include', '/accounts/:account_id/settings');
     });
     it('stories:r/w global default', () => {
         cy.createDummyRoleAndUser({ permission: ['stories:r'] });

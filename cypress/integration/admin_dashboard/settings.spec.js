@@ -10,7 +10,7 @@ describe('global settings', () => {
     });
 
     it('should be able to access global settings through the admin sidebar', () => {
-        cy.visit('/admin/settings');
+        cy.visit('/accounts/:account_id/settings');
         cy.contains('Default NLU Pipeline').should('exist');
         cy.contains('Default credentials').should('exist');
         cy.contains('Default endpoints').should('exist');

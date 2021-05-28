@@ -56,7 +56,8 @@ class ProjectsList extends React.Component {
     ];
 
     render() {
-        const { loading, projects } = this.props;
+        const { loading, projects, params } = this.props;
+        
         return (
             <div>
                 <PageMenu icon='sitemap' title='Projects' headerDataCy='projects-page-header'>
@@ -68,7 +69,7 @@ class ProjectsList extends React.Component {
                                     <Button
                                         data-cy='new-project'
                                         onClick={() => {
-                                            browserHistory.push('/admin/project/add');
+                                            browserHistory.push(`/accounts/${params.account_id}/project/add`);
                                         }}
                                         primary
                                         disabled={loading}

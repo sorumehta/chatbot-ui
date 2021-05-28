@@ -189,18 +189,18 @@ class Routes extends React.PureComponent {
                                     />
                                     <Route path='*' component={NotFound} />
                                 </Route>
-                                <Route exact path='/admin' component={AdminLayout} onEnter={authenticateAdminPage()}>
-                                    <Route path='/admin/projects' component={ProjectsListContainer} name='Projects' onEnter={authenticate('projects:r', { scope: 'anyScope' })} />
-                                    <Route path='/admin/project/:project_id' component={ProjectContainer} name='Project' onEnter={authenticate('projects:w', { scope: 'GLOBAL' })} />
-                                    <Route path='/admin/project/add' component={ProjectContainer} name='Project' onEnter={authenticate('projects:w', { scope: 'GLOBAL' })} />
-                                    <Route path='/admin/users' component={UsersListContainer} name='Users' onEnter={authenticate('users:r', { scope: 'anyScope' })} />
-                                    <Route path='/admin/user/:user_id' component={UserContainer} name='Edit User' onEnter={authenticate('users:r', { scope: 'anyScope' })} />
-                                    <Route path='/admin/settings' component={SettingsContainer} name='Settings' onEnter={authenticate('global-settings:r', { scope: 'anyScope' })} />
-                                    <Route path='/admin/settings/:setting' component={SettingsContainer} name='Settings' onEnter={authenticate('global-settings:r', { scope: 'anyScope' })} />
-                                    <Route path='/admin/roles' component={RolesList} name='Roles' onEnter={authenticate('roles:r', { scope: 'anyScope' })} />
-                                    <Route path='/admin/role/:role_name' component={RoleContainer} name='Edit Role' onEnter={authenticate('roles:r', { scope: 'anyScope' })} />
-                                    <Route path='/admin/role/' component={RoleContainer} name='Create Role' onEnter={authenticate('roles:w', { scope: 'anyScope' })} />
-                                    <Route path='/admin/user/add' component={UserContainer} name='Add User' onEnter={authenticate('users:w', { scope: 'anyScope' })} />
+                                <Route exact path='/accounts/:account_id' component={AdminLayout} onEnter={authenticateAdminPage()}>
+                                    <Route path='/accounts/:account_id/projects' component={ProjectsListContainer} name='Projects' onEnter={authenticate('projects:r', { scope: 'anyScope' })} />
+                                    <Route path='/accounts/:account_id/project/:project_id' component={ProjectContainer} name='Project' onEnter={authenticate('projects:w', { scope: 'GLOBAL' })} />
+                                    <Route path='/accounts/:account_id/project/add' component={ProjectContainer} name='Project' onEnter={authenticate('projects:w', { scope: 'GLOBAL' })} />
+                                    <Route path='/accounts/:account_id/users' component={UsersListContainer} name='Users' onEnter={authenticate('users:r', { scope: 'anyScope' })} />
+                                    <Route path='/accounts/:account_id/user/:user_id' component={UserContainer} name='Edit User' onEnter={authenticate('users:r', { scope: 'anyScope' })} />
+                                    <Route path='/accounts/:account_id/settings' component={SettingsContainer} name='Settings' onEnter={authenticate('global-settings:r', { scope: 'anyScope' })} />
+                                    <Route path='/accounts/:account_id/settings/:setting' component={SettingsContainer} name='Settings' onEnter={authenticate('global-settings:r', { scope: 'anyScope' })} />
+                                    <Route path='/accounts/:account_id/roles' component={RolesList} name='Roles' onEnter={authenticate('roles:r', { scope: 'anyScope' })} />
+                                    <Route path='/accounts/:account_id/role/:role_name' component={RoleContainer} name='Edit Role' onEnter={authenticate('roles:r', { scope: 'anyScope' })} />
+                                    <Route path='/accounts/:account_id/role/' component={RoleContainer} name='Create Role' onEnter={authenticate('roles:w', { scope: 'anyScope' })} />
+                                    <Route path='/accounts/:account_id/user/add' component={UserContainer} name='Add User' onEnter={authenticate('users:w', { scope: 'anyScope' })} />
                                 </Route>
                                 <Route path='/chat/:project_id' component={ChatDemo} name='Chat Demo' />
                                 <Route path='/404' component={() => <NotFound code={404} />} />

@@ -22,7 +22,7 @@ describe('can create, edit, and delete a role', () => {
         cy.deleteProject('bf');
     });
     it('should create, edit and delete a role', () => {
-        cy.visit('/admin/roles');
+        cy.visit('/accounts/:account_id/roles');
 
         // verify role data was saved
         cy.get('.-btn').contains('Next').click();
@@ -37,7 +37,7 @@ describe('can create, edit, and delete a role', () => {
         cy.dataCy('save-button').should('have.text', 'Saved');
 
         // verfiy that the role was not duplicated
-        cy.visit('/admin/roles');
+        cy.visit('/accounts/:account_id/roles');
         cy.get('.-btn').contains('Next').click();
         cy.dataCy('role-link').contains(roleName).should('not.exist');
         cy.dataCy('role-link').contains(editedRoleName).should('exist').click();
@@ -49,11 +49,11 @@ describe('can create, edit, and delete a role', () => {
         cy.dataCy('delete-role-modal').find('.ui.negative.button').contains('Delete').click();
 
         // verify user role was change to the fallback role
-        cy.visit('/admin/roles');
+        cy.visit('/accounts/:account_id/roles');
         cy.get('.-btn').contains('Next').click();
         cy.dataCy('role-link').contains(roleName).should('not.exist');
 
-        cy.visit('/admin/users');
+        cy.visit('/accounts/:account_id/users');
         cy.dataCy('edit-user').last().click();
         cy.dataCy('user-roles-field').find('.label').contains('global-admin').should('exist');
     });

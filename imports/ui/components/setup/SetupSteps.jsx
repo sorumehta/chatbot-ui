@@ -5,6 +5,7 @@ import { Meteor } from 'meteor/meteor';
 import React from 'react';
 
 import StepAccount from './StepAccount';
+import {UserAccounts} from '../../../api/user_accounts/user_accounts.collection'
 import { wrapMeteorCallback } from '../utils/Errors';
 
 class SetupSteps extends React.Component {
@@ -51,7 +52,10 @@ class SetupSteps extends React.Component {
                             ])
                                 .then(() => {
                                     this.setState({ loading: false });
-                                    router.push('/admin/projects');
+                                    const userAccntObj = UserAccounts.findOne({email: doc.email})
+                                    console.log("userAccount object returned:")
+                                    console.log(userAccntObj)
+                                    router.push(`/accounts/${userAccntObj.accountId}/projects`);
                                 })
                                 .catch((e) => {
                                     this.setState({ loading: false });

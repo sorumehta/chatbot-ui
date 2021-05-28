@@ -12,6 +12,7 @@ import {
 } from 'uniforms-semantic';
 import { wrapMeteorCallback } from '../utils/Errors';
 import { GlobalSettings } from '../../../api/globalSettings/globalSettings.collection';
+import {UserAccounts} from '../../../api/user_accounts/user_accounts.collection'
 
 class LoginComponent extends React.Component {
     loginFormSchema = new SimpleSchema(
@@ -66,7 +67,10 @@ class LoginComponent extends React.Component {
                         browserHistory.goBack();
                     } else {
                         // if not, we use the default route
-                        browserHistory.push('/');
+                        console.log("Finding corresponding account for "+email.trim().toLowerCase())
+                        const userAccountObj = UserAccounts.findOne({email: email.trim().toLowerCase()})
+                        console.log(userAccountObj)
+                        browserHistory.push(`/accounts/${userAccountObj.accountId}/projects`);
                     }
                 }
             }),
@@ -138,6 +142,7 @@ LoginComponent.defaultProps = {
 
 const LoginContainer = withTracker(() => {
     Meteor.subscribe('settings');
+    Meteor.subscribe('user_accounts');
     const settings = GlobalSettings.findOne({}, { fields: { 'settings.public.reCatpchaSiteKey': 1 } });
     return {
         settings,

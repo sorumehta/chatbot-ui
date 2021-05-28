@@ -17,7 +17,7 @@ const packageJson = require('/package.json');
 class ProjectSidebar extends React.Component {
     render() {
         const {
-            projectName, projectId, handleChangeProject, settingsReady, settings,
+            projectName, projectId, handleChangeProject, settingsReady, settings, params
         } = this.props;
 
         const canViewProjectsTab = can('projects:r', projectId)
@@ -71,7 +71,7 @@ class ProjectSidebar extends React.Component {
                     || can('global-settings:r', { anyScope: true })
                     // we need to check if there is not scope for this 'projects:r, because without scope it can create/edit projects
                     || isUserPermissionGlobal(Meteor.userId(), 'projects:r')) && (
-                        <Link to='/admin/'>
+                        <Link to={`/accounts/${params.account_id}/`}>
                             <Menu.Item name='Admin' icon='key' />
                         </Link>
                     )}

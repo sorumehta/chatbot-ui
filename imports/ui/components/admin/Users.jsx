@@ -73,7 +73,7 @@ class UsersList extends React.Component {
 
 
     render() {
-        const { loading, users } = this.props;
+        const { loading, users, params } = this.props;
        
 
         return (
@@ -87,7 +87,7 @@ class UsersList extends React.Component {
                                     <Button
                                         data-cy='new-user'
                                         onClick={() => {
-                                            browserHistory.push('/admin/user/add');
+                                            browserHistory.push(`/accounts/${params.account_id}/user/add`);
                                         }}
                                         primary
                                         disabled={loading}

@@ -28,12 +28,12 @@ describe('Training and deploy', function() {
         cy.logout();
         cy.deleteProject('bf');
         cy.get('@gitRepo').then(gitRepo => cy.tearDownGitRepo(gitRepo));
-        cy.visit('/admin/settings/webhooks');
+        cy.visit('/accounts/:account_id/settings/webhooks');
         cy.dataCy('DeployProject').find('input').clear();
     });
 
     it('should train, run tests, commit, call the deployment webhook, and then fail', function() {
-        cy.visit('/admin/settings');
+        cy.visit('/accounts/:account_id/settings');
         cy.contains('Webhooks').click();
         cy.dataCy('DeployProject').find('input').clear().type('http://localhost:8000/webhooks/deploy');
 
@@ -72,7 +72,7 @@ describe('Training and deploy', function() {
     });
 
     it('should train, run tests, commit, call the deployment webhook, and then pass', function() {
-        cy.visit('/admin/settings');
+        cy.visit('/accounts/:account_id/settings');
         cy.contains('Webhooks').click();
         cy.dataCy('DeployProject').find('input').clear().type('http://localhost:8000/webhooks/deploy');
 
@@ -133,7 +133,7 @@ describe('Training and deploy', function() {
     });
 
     it('Should not show deploy option if deploy hook not set', function() {
-        cy.visit('/admin/settings');
+        cy.visit('/accounts/:account_id/settings');
         cy.contains('Webhooks').click();
         cy.dataCy('DeployProject').should('have.value', '');
         cy.visit('/project/bf/dialogue');

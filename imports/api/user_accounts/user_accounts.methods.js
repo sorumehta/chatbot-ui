@@ -15,14 +15,14 @@ function handleError(e) {
 }
 
 Meteor.methods({
-    'accounts.insert'(userId) {
+    'accounts.insert'(userId, email) {
         // checkIfCan('stories:w', projectId);
         // check(slot, Object);
         // check(projectId, String);
         // validateSchema(slot);
         try {
             const num_accounts = UserAccounts.find({}).count()
-            return UserAccounts.insert({userId: userId, accountId: num_accounts+1});
+            return UserAccounts.insert({userId: userId, email: email, accountId: num_accounts+1});
         } catch (e) {
             console.error(e)
             return handleError(e);

@@ -21,7 +21,7 @@ describe('users:r can not edit user data', () => {
         cy.removeDummyRoleAndUser();
     });
     it('should not show edit features in the users page', () => {
-        cy.visit('/admin');
+        cy.visit('/accounts/:account_id');
         cy.dataCy('users-link').click({ force: true });
         cy.dataCy('edit-user').first().click();
         cy.get('.disabled.required.field').should('have.length', 6); // check ALL fields are disabled
@@ -51,7 +51,7 @@ describe('visibility of the Users link in the admin sidebar', () => {
         cy.removeDummyRoleAndUser();
     });
     it('the "Users" link is hidden in the admin sidebar when the user does not have users:r permission', () => {
-        cy.visit('/admin');
+        cy.visit('/accounts/:account_id');
         cy.dataCy('users-link').should('not.exist');
     });
 });

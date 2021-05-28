@@ -38,7 +38,7 @@ const Role = (props) => {
     ] = useMutation(UPSERT_ROLES_DATA);
     const [deleteRoleData] = useMutation(DELETE_ROLE_DATA, {
         onCompleted: () => {
-            browserHistory.push('/admin/roles');
+            browserHistory.push(`/accounts/${params.account_id}/roles`);
         },
     });
 

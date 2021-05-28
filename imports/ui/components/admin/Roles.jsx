@@ -1,6 +1,6 @@
 /* eslint-disable react/destructuring-assignment */
 import { Menu, Button, Container } from 'semantic-ui-react';
-import { Link, browserHistory } from 'react-router';
+import { Link, browserHistory, useParams } from 'react-router';
 import { useQuery } from '@apollo/react-hooks';
 import ReactTable from 'react-table-v6';
 import React from 'react';
@@ -21,6 +21,7 @@ const columns = [
 ];
 const RolesList = () => {
     const { loading, data } = useQuery(GET_ROLES_DATA, { fetchPolicy: 'cache-and-network' });
+    const {account_id} = useParams();
     return (
         <div>
             <PageMenu icon='sitemap' title='Roles'>
@@ -33,7 +34,7 @@ const RolesList = () => {
                                 icon='add'
                                 content='Create Role'
                                 onClick={() => {
-                                    browserHistory.push('/admin/role/');
+                                    browserHistory.push(`/accounts/${account_id}/role/`);
                                 }}
                             />
                         </Menu.Item>

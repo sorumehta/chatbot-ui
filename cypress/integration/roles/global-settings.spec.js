@@ -17,12 +17,12 @@ describe('global settings read permissions', () => {
     });
 
     it('should be able to access global settings through the admin sidebar', () => {
-        cy.visit('/admin');
+        cy.visit('/accounts/:account_id');
         cy.dataCy('global-settings-link').should('exist');
     });
     
     it('All global settings save buttons should be hidden', () => {
-        cy.visit('/admin/settings');
+        cy.visit('/accounts/:account_id/settings');
         cy.get('div.ui.vertical.menu a.item').each((item) => {
             cy.wrap(item).click();
             cy.dataCy('save-global-settings').should('not.exist');
@@ -42,13 +42,13 @@ describe('global settings read permissions', () => {
         ];
         // we check the panes where every single field is disabled
         simpleDisabledCheck.forEach((menu) => {
-            cy.visit('/admin/settings');
+            cy.visit('/accounts/:account_id/settings');
             cy.contains(menu).click();
             cy.get('div.column div.segment .field').each(field => cy.wrap(field).should('have.class', 'disabled'));
         });
 
         // check the more panes where not eveything is disabled (eg: label)
-        cy.visit('/admin/settings');
+        cy.visit('/accounts/:account_id/settings');
         cy.contains('Appearance').click();
         cy.get('div.column div.segment > .field').each(field => cy.wrap(field).should('have.class', 'disabled'));
         cy.get('div.column div.segment > .fields').each(field => cy.wrap(field).should('have.class', 'disabled'));
@@ -56,7 +56,7 @@ describe('global settings read permissions', () => {
 
     it('should not be able to access project settings from global settings and vice versa', () => {
         cy.login();
-        cy.visit('/admin/settings');
+        cy.visit('/accounts/:account_id/settings');
         cy.get('div.ui.vertical.menu a.item').contains('Project Settings').should('not.exist');
         cy.visit('/project/bf/settings');
         cy.dataCy('project-settings-more').should('not.exist');
@@ -81,7 +81,7 @@ describe('global settings admin sidebar', () => {
         cy.deleteProject('bf');
     });
     it('should not be able to access global-settings without global-settings:r', () => {
-        cy.visit('/admin');
+        cy.visit('/accounts/:account_id');
         cy.dataCy('roles-link').should('exist');
         cy.dataCy('global-settings-link').should('not.exist');
     });

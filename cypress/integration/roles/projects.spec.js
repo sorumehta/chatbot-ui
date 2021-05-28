@@ -88,7 +88,7 @@ describe('projects:r can access but not edit settings', () => {
         cy.createDummyRoleAndUser({ permission: ['users:r'], scope: 'GLOBAL' });
         cy.wait(2000);
         cy.login({ admin: false });
-        cy.visit('/admin');
+        cy.visit('/accounts/:account_id');
         // check non authorized users cannot see the projects tab
         cy.dataCy('users-link').should('exist');
         cy.dataCy('projects-link').should('not.exist');
@@ -100,7 +100,7 @@ describe('projects:r can access but not edit settings', () => {
         cy.createDummyRoleAndUser({ permission: ['projects:r'], scope: 'GLOBAL' });
         cy.wait(2000);
         cy.login({ admin: false });
-        cy.visit('/admin');
+        cy.visit('/accounts/:account_id');
         // check authorized users can view projects
         cy.dataCy('projects-link').click();
         cy.get('.header').contains('Projects');
@@ -115,7 +115,7 @@ describe('projects:r can access but not edit settings', () => {
         cy.createDummyRoleAndUser({ permission: ['projects:w'], scope: 'GLOBAL' });
         cy.wait(2000);
         cy.login({ admin: false });
-        cy.visit('/admin');
+        cy.visit('/accounts/:account_id');
         // check authorized users can view projects
         cy.dataCy('projects-link').click();
         cy.dataCy('projects-page-header').should('exist');
