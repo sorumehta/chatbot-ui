@@ -129,6 +129,7 @@ if (Meteor.isServer) {
             });
             console.log(`user created with ID = ${userId}`)
             Roles.addUsersToRoles(userId, ['global-admin'], null);
+            Meteor.call('accounts.insert',userId)
         },
 
         async 'initialSetup.secondStep'(projectData) {
